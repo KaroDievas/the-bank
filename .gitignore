@@ -6,6 +6,8 @@
 /public/bundles/
 /var/
 /vendor/
+.idea
+the-bank.iml
 ###< symfony/framework-bundle ###
 .docker
 ###> symfony/phpunit-bridge ###

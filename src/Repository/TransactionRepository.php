@@ -19,6 +19,11 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
+    public function getAllAsArray()
+    {
+        return $this->createQueryBuilder('c')->getQuery()->getArrayResult();
+    }
+
     // /**
     //  * @return Transaction[] Returns an array of Transaction objects
     //  */
