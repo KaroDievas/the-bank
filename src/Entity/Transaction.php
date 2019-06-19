@@ -14,52 +14,52 @@ class Transaction
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $user_id;
+    protected $user_id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $details;
+    protected $details;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $receiver_account;
+    protected $receiver_account;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $receiver_name;
+    protected $receiver_name;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)
      */
-    private $fee_amount;
+    protected $fee_amount;
 
     /**
      * @ORM\Column(type="string", length=3)
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    protected $created_at;
 
     public function getId(): ?int
     {
