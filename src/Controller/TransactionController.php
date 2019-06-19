@@ -46,8 +46,23 @@ class TransactionController extends AbstractController
     /**
      * @Route("/sign-transation/{id}", name="sign-transaction", methods={"PUT"})
      */
-    public function submitNewTransactionAction(Request $request, $id) : JsonResponse
+    public function submitNewTransactionAction(Request $request, $id, EntityManagerInterface $em) : JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
+        if (isset($data['code']) && $data['code'] === 111) {
+            $transaction = $this->getDoctrine()
+                ->getRepository(Transaction::class)
+                ->find($id);
 
+            if (!$transaction) {
+                return $this->json(['error' => 'Transaction not found'], 404);
+            }
+
+            $transaction->setStatus('SIGNED-PENDING');
+            $em->persist($transaction);
+            $em->flush();
+        }
+
+        return $this->json(['error' => 'Invalid code'], 401);
     }
 }
