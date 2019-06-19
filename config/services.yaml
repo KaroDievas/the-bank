@@ -28,3 +28,10 @@ services:
             - "@request_stack"
             - "@serializer"
             - "@doctrine.orm.entity_manager"
+
+    App\Security\Voter\TransactionVoter:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        public: false
+        tags:
+            - { name: security.voter }

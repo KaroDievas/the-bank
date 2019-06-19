@@ -69,6 +69,5 @@ abstract class BaseTransactionProvider
             $fee = $currentAmount * self::REDUCED_FEE_RATE;
         }
         $this->transaction->setFeeAmount($fee);
-        $this->transaction->setAmount($currentAmount + $fee);
     }
 }

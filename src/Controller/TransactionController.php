@@ -11,9 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class TransactionController extends AbstractController
@@ -33,6 +30,10 @@ class TransactionController extends AbstractController
      */
     public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory, SerializerInterface $serializer) : JsonResponse
     {
+        if (!$this->isGranted('CREATE', json_decode($request->getContent(), true))) {
+            return $this->json(['error' => 'Transaction limits exceeded'], 403);
+        }
+
         try {
             $transaction = $transactionProviderFactory->getProvider();
             $transaction->submit();
