@@ -40,12 +40,7 @@ abstract class BaseTransactionProvider
         return $this->transaction;
     }
 
-    /**
-     * Submits new transaction to database
-     *
-     * @throws \Exception
-     */
-    public function submit() : void
+    public function initialise(): void
     {
         $this->transaction = $this->serializer->deserialize($this->data, Transaction::class, 'json');
 
@@ -53,6 +48,15 @@ abstract class BaseTransactionProvider
         $this->applyFee();
         $this->transaction->setStatus('CREATED');
         $this->transaction->setCreatedAt(new \DateTime('now'));
+    }
+
+    /**
+     * Submits new transaction to database
+     *
+     * @throws \Exception
+     */
+    public function submit() : void
+    {
         $this->em->persist($this->transaction);
         $this->em->flush();
     }

@@ -26,7 +26,7 @@ class TransactionVoter extends Voter
 
     /**
      * @param string $attribute
-     * @param mixed $subject
+     * @param mixed $subject - transaction
      * @param TokenInterface $token
      * @return bool
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -35,16 +35,15 @@ class TransactionVoter extends Voter
     {
         switch ($attribute) {
             case 'CREATE':
-                $totalTransactions = $this->em->getRepository(Transaction::class)->getTotalTransactionsCountPerHourByUserId($subject['user_id']);
+                $totalTransactions = $this->em->getRepository(Transaction::class)->getTotalTransactionsCountPerHourByUserId($subject->getUserId());
                 // Check total transaction count for last hour
                 if ($totalTransactions == self::MAX_TRANSACTION_COUNT_PER_HOUR) {
                     return false;
                 }
 
-                $totalAmountPerCurrency = $this->em->getRepository(Transaction::class)->getTotalAmountByUserAndByCurrency($subject['user_id'], $subject['currency']);
+                $totalAmountPerCurrency = $this->em->getRepository(Transaction::class)->getTotalAmountByUserAndByCurrency($subject->getUserId(), $subject->getCurrency());
                 // check total amount for particular user and currency
-                // There is a bug that in this case new transaction fee is not applied
-                if ($totalAmountPerCurrency + $subject['amount'] >= self::MAX_AMOUNT_PER_CURRENCY) {
+                if ($totalAmountPerCurrency + $subject->getAmount() + $subject->getFeeAmount() >= self::MAX_AMOUNT_PER_CURRENCY) {
                     return false;
                 }
                 break;

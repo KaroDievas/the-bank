@@ -30,12 +30,12 @@ class TransactionController extends AbstractController
      */
     public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory, SerializerInterface $serializer) : JsonResponse
     {
-        if (!$this->isGranted('CREATE', json_decode($request->getContent(), true))) {
-            return $this->json(['error' => 'Transaction limits exceeded'], 403);
-        }
-
         try {
             $transaction = $transactionProviderFactory->getProvider();
+            $transaction->initialise();
+            if (!$this->isGranted('CREATE', $transaction->getTransaction())) {
+                return $this->json(['error' => 'Transaction limits exceeded'], 403);
+            }
             $transaction->submit();
             return $this->json($serializer->serialize($transaction->getTransaction(), 'json'), 201);
         }
