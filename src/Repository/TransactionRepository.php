@@ -65,4 +65,13 @@ class TransactionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getTransactionsByStatusSignedPending()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.status = :status')
+            ->setParameter('status', 'SIGNED-PENDING')
+            ->getQuery()
+            ->getResult();
+    }
 }
