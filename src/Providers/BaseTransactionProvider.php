@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -29,7 +29,7 @@ abstract class BaseTransactionProvider
     /**
      * Applies custom rules for transaction details
      */
-    public abstract function setDetails() : void;
+    public abstract function setDetails(): void;
 
 
     /**
@@ -55,7 +55,7 @@ abstract class BaseTransactionProvider
      *
      * @throws \Exception
      */
-    public function submit() : void
+    public function submit(): void
     {
         $this->em->persist($this->transaction);
         $this->em->flush();
@@ -64,7 +64,7 @@ abstract class BaseTransactionProvider
     /**
      * Function applies fee to current transaction
      */
-    private function applyFee() : void
+    private function applyFee(): void
     {
         $totalAmount = $this->em->getRepository(Transaction::class)->getTotalAmountByUserId($this->transaction->getUserId());
         $currentAmount = $this->transaction->getAmount();

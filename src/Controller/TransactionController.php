@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -20,7 +20,7 @@ class TransactionController extends AbstractController
      * @Route("/get-all-transactions", name="get-all-transactions", methods={"GET"})
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getAllTransactionsAction() : JsonResponse
+    public function getAllTransactionsAction(): JsonResponse
     {
         return $this->json($this->getDoctrine()->getRepository(Transaction::class)->getAllAsArray(), 200);
     }
@@ -28,7 +28,7 @@ class TransactionController extends AbstractController
     /**
      * @Route("/create-new-transaction", name="create-new-transaction", methods={"POST"})
      */
-    public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory, SerializerInterface $serializer) : JsonResponse
+    public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory, SerializerInterface $serializer): JsonResponse
     {
         try {
             $transaction = $transactionProviderFactory->getProvider();
@@ -38,8 +38,7 @@ class TransactionController extends AbstractController
             }
             $transaction->submit();
             return $this->json($serializer->serialize($transaction->getTransaction(), 'json'), 201);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->json(['error' => $exception->getMessage()], 500);
         }
     }
@@ -47,7 +46,7 @@ class TransactionController extends AbstractController
     /**
      * @Route("/sign-transation/{id}", name="sign-transaction", methods={"PUT"})
      */
-    public function submitNewTransactionAction(Request $request, $id, EntityManagerInterface $em) : JsonResponse
+    public function submitNewTransactionAction(Request $request, $id, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (isset($data['code']) && $data['code'] === 111) {
