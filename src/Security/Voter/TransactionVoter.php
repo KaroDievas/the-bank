@@ -36,9 +36,8 @@ class TransactionVoter extends Voter
         switch ($attribute) {
             case 'CREATE':
                 $totalTransactions = $this->em->getRepository(Transaction::class)->getTotalTransactionsCountPerHourByUserId($subject->getUserId());
-                var_dump($totalTransactions);
                 // Check total transaction count for last hour
-                if ($totalTransactions >= self::MAX_TRANSACTION_COUNT_PER_HOUR) {
+                if ($totalTransactions == self::MAX_TRANSACTION_COUNT_PER_HOUR) {
                     return SELF::ACCESS_DENIED;
                 }
 
