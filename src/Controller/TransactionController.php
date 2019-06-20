@@ -27,6 +27,9 @@ class TransactionController extends AbstractController
 
     /**
      * @Route("/create-new-transaction", name="create-new-transaction", methods={"POST"})
+     * @param Request $request
+     * @param TransactionProviderFactory $transactionProviderFactory
+     * @return JsonResponse
      */
     public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory): JsonResponse
     {
@@ -45,6 +48,10 @@ class TransactionController extends AbstractController
 
     /**
      * @Route("/sign-transaction/{id}", name="sign-transaction", methods={"PUT"})
+     * @param Request $request
+     * @param $id
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
      */
     public function submitNewTransactionAction(Request $request, $id, EntityManagerInterface $em): JsonResponse
     {

@@ -29,7 +29,7 @@ class TransactionVoterTest extends TestCase
 
         $token = new AnonymousToken('secret', 'anonymous');
         $this->assertEquals(0, $transactionVoter->vote($token, $transaction, ['CREATE2']));
-        $this->assertEquals(1, $transactionVoter->vote($token, $transaction, ['CREATE']));
+        $this->assertEquals(-1, $transactionVoter->vote($token, $transaction, ['CREATE']));
     }
 
     public function testReachedTotalLimit()
@@ -52,7 +52,7 @@ class TransactionVoterTest extends TestCase
         $transactionVoter = new TransactionVoter($em);
 
         $token = new AnonymousToken('secret', 'anonymous');
-        $this->assertEquals(1, $transactionVoter->vote($token, $transaction, ['CREATE']));
+        $this->assertEquals(-1, $transactionVoter->vote($token, $transaction, ['CREATE']));
     }
 
 }

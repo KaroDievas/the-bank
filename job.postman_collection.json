@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "d538b8ce-2960-417b-9c07-6c9e495778bf",
+		"name": "Kernolab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-all-transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/get-all-transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"get-all-transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-new-transaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": 11,\n\t\"details\": \"Transaction number one\",\n\t\"receiver_account\": \"12345\",\n\t\"receiver_name\": \"Name Surname\",\n\t\"amount\": 20.00,\n\t\"currency\": \"usd\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/create-new-transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"create-new-transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sign-transaction",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"code\": 111\n}"
+				},
+				"url": {
+					"raw": "http://localhost/sign-transaction/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"sign-transaction",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
