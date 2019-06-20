@@ -38,8 +38,18 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 RUN echo "dev ALL=(ALL) ALL" > /etc/sudoers
 
+COPY crontab /etc/cron.d/crontab
+
+RUN chmod 0644 /etc/cron.d/crontab
+
+RUN crontab /etc/cron.d/crontab
+
+RUN touch /var/log/cron.log
+
+CMD cron && tail -f /var/log/cron.log
+
 WORKDIR /home/wwwroot/
 ##</romaricp>##
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php-fpm"] # add to start cron "cron", "-f" but here is something wrong
