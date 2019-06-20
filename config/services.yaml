@@ -35,3 +35,6 @@ services:
         public: false
         tags:
             - { name: security.voter }
+    App\Command\TransactionProcessorCommand:
+        tags:
+            - { name: 'console.command', command: 'app:process-transactions' }

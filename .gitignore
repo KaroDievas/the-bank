@@ -9,8 +9,8 @@
 .idea
 the-bank.iml
 ###< symfony/framework-bundle ###
-.docker
 ###> symfony/phpunit-bridge ###
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+.docker/data
