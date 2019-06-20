@@ -36,19 +36,20 @@ class TransactionVoter extends Voter
         switch ($attribute) {
             case 'CREATE':
                 $totalTransactions = $this->em->getRepository(Transaction::class)->getTotalTransactionsCountPerHourByUserId($subject->getUserId());
+                var_dump($totalTransactions);
                 // Check total transaction count for last hour
-                if ($totalTransactions == self::MAX_TRANSACTION_COUNT_PER_HOUR) {
-                    return false;
+                if ($totalTransactions >= self::MAX_TRANSACTION_COUNT_PER_HOUR) {
+                    return SELF::ACCESS_DENIED;
                 }
 
                 $totalAmountPerCurrency = $this->em->getRepository(Transaction::class)->getTotalAmountByUserAndByCurrency($subject->getUserId(), $subject->getCurrency());
                 // check total amount for particular user and currency
                 if ($totalAmountPerCurrency + $subject->getAmount() + $subject->getFeeAmount() >= self::MAX_AMOUNT_PER_CURRENCY) {
-                    return false;
+                    return SELF::ACCESS_DENIED;
                 }
                 break;
         }
 
-        return true;
+        return SELF::ACCESS_GRANTED;
     }
 }

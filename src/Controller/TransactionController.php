@@ -28,7 +28,7 @@ class TransactionController extends AbstractController
     /**
      * @Route("/create-new-transaction", name="create-new-transaction", methods={"POST"})
      */
-    public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory, SerializerInterface $serializer): JsonResponse
+    public function createNewTransactionAction(Request $request, TransactionProviderFactory $transactionProviderFactory): JsonResponse
     {
         try {
             $transaction = $transactionProviderFactory->getProvider();
@@ -37,14 +37,14 @@ class TransactionController extends AbstractController
                 return $this->json(['error' => 'Transaction limits exceeded'], 403);
             }
             $transaction->submit();
-            return $this->json($serializer->serialize($transaction->getTransaction(), 'json'), 201);
+            return $this->json($transaction->getTransaction()->toArray(), 201);
         } catch (\Exception $exception) {
             return $this->json(['error' => $exception->getMessage()], 500);
         }
     }
 
     /**
-     * @Route("/sign-transation/{id}", name="sign-transaction", methods={"PUT"})
+     * @Route("/sign-transaction/{id}", name="sign-transaction", methods={"PUT"})
      */
     public function submitNewTransactionAction(Request $request, $id, EntityManagerInterface $em): JsonResponse
     {
@@ -61,6 +61,8 @@ class TransactionController extends AbstractController
             $transaction->setStatus('SIGNED-PENDING');
             $em->persist($transaction);
             $em->flush();
+
+            return $this->json([], 204);
         }
 
         return $this->json(['error' => 'Invalid code'], 401);

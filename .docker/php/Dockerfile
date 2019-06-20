@@ -9,6 +9,8 @@ RUN apt-get update \
 
 RUN docker-php-ext-install pdo pdo_mysql zip
 
+RUN pecl install xdebug
+
 COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm-pool.conf 	/usr/local/etc/php/pool.d/www.conf
 

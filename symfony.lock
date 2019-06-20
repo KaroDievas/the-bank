@@ -99,6 +99,9 @@
     "psr/log": {
         "version": "1.1.0"
     },
+    "symfony/browser-kit": {
+        "version": "v4.3.1"
+    },
     "symfony/cache": {
         "version": "v4.3.1"
     },
@@ -128,6 +131,9 @@
         "version": "v4.3.1"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.3.1"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.3.1"
     },
     "symfony/dotenv": {
